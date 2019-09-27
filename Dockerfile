@@ -37,11 +37,18 @@ RUN jupyter labextension install jupyterlab-plotly@1.1.2 --no-build
 RUN jupyter lab build
 RUN unset NODE_OPTIONS
 
+# Create notebooks folder
 RUN mkdir /home/notebooks
 
+# Set volume to the nobooks folder
 VOLUME ["/home/notebooks"]
 
+# Expose the port
 EXPOSE 8888
 
+# Set the wokring directory
+WORKDIR ["/home/notebooks"]
+
+# Set the entrypoint command
 ENTRYPOINT ["jupyter-lab", "--ip=0.0.0.0", "--no-browser", "--allow-root"]
 
