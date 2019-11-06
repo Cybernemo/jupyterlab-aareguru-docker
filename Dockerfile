@@ -5,7 +5,7 @@ FROM $BASE_CONTAINER
 RUN apt-get update && apt-get -y upgrade
 
 # Install necessary packages
-RUN apt install -y gcc g++ build-essential curl
+RUN apt install -y gcc g++ build-essential curl git
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 RUN apt install -y nodejs
 
@@ -37,14 +37,14 @@ RUN jupyter labextension install jupyterlab-plotly@1.1.2 --no-build
 RUN jupyter lab build
 RUN unset NODE_OPTIONS
 
-# Create notebooks folder
-RUN mkdir /home/notebooks
+# Clone the aare-guru repository
+RUN git clone git@gitlab.com:fri-ml/aareguru-forecast.git
 
 # Expose the port
 EXPOSE 8888
 
 # Set the wokring directory
-WORKDIR /home/notebooks
+WORKDIR /home/
 
 # Set the entrypoint command
 ENTRYPOINT ["jupyter-lab", "--ip=0.0.0.0", "--no-browser", "--allow-root"]
